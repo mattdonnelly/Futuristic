@@ -17,6 +17,4 @@ Pod::Spec.new do |s|
   s.dependency 'Result', '~> 2.1'
 
   s.requires_arc = true
-
-  s.pod_target_xcconfig = { 'SWIFT_VERSION' => '2.3' }
 end
