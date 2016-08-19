@@ -15,12 +15,12 @@ class FutureTests: QuickSpec {
     override func spec() {
         describe("Future") {
             describe("properties") {
-                let fulfilledFuture: Future<String, NSError> = Future(.Success("test"))
+                let fulfilledFuture: Future<String, NoError> = Future(.Success("test"))
 
                 let error = NSError(domain: "test", code: 0, userInfo: nil)
-                let rejectedFuture: Future<String, NSError> = Future(.Failure(error))
+                let rejectedFuture: Future<Any, NSError> = Future(.Failure(error))
 
-                let pendingFuture: Future<String, NSError> = Future()
+                let pendingFuture: Future<String, NoError> = Future()
 
                 describe("value") {
                     context("when the future is fufilled") {
