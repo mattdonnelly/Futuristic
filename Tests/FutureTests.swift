@@ -22,71 +22,95 @@ class FutureTests: QuickSpec {
 
                 let pendingFuture: Future<String, NSError> = Future()
 
-                describe("getters") {
-                    describe("value") {
-                        it("should return the value for fulfilled future") {
+                describe("value") {
+                    context("when the future is fufilled") {
+                        it("should return the value") {
                             expect(fulfilledFuture.value).to(beTruthy())
-                        }
-
-                        it("should return nil for a rejected future") {
-                            expect(rejectedFuture.value).to(beNil())
-                        }
-
-                        it("should return nil for a pending future") {
-                            expect(pendingFuture.value).to(beNil())
                         }
                     }
 
-                    describe("error") {
-                        it("should return nil for fulfilled future") {
+                    context("when the future is rejected") {
+                        it("should return nil") {
+                            expect(rejectedFuture.value).to(beNil())
+                        }
+                    }
+
+                    context("when the future is pending") {
+                        it("should return nil") {
+                            expect(pendingFuture.value).to(beNil())
+                        }
+                    }
+                }
+
+                describe("error") {
+                    context("when the future is fufilled") {
+                        it("should return nil") {
                             expect(fulfilledFuture.error).to(beNil())
                         }
+                    }
 
-                        it("should return the error for a rejected future") {
+                    context("when the future is rejected") {
+                        it("should return the error") {
                             expect(rejectedFuture.error).to(beTruthy())
                         }
+                    }
 
-                        it("should return nil for a pending future") {
+                    context("when the future is pending") {
+                        it("should return nil") {
                             expect(pendingFuture.error).to(beNil())
                         }
                     }
                 }
 
-                describe("status checks") {
-                    describe("isFulfilled") {
-                        it("should return true when the future has been fulfilled") {
+                describe("isFulfilled") {
+                    context("when the future is fulfilled") {
+                        it("should return true") {
                             expect(fulfilledFuture.isFulfilled).to(beTrue())
                         }
+                    }
 
-                        it("should return false when the future has been rejected") {
+                    context("when the future is rejected") {
+                        it("should return false") {
                             expect(rejectedFuture.isFulfilled).to(beFalse())
                         }
+                    }
 
-                        it("should return true when the future has not been completed") {
+                    context("when the future is pending") {
+                        it("should return true") {
                             expect(pendingFuture.isFulfilled).to(beFalse())
                         }
                     }
+                }
 
-                    describe("isRejected") {
-                        it("should return false when the future has been fulfilled") {
+                describe("isRejected") {
+                    context("when the future is fulfilled") {
+                        it("should return true") {
                             expect(fulfilledFuture.isRejected).to(beFalse())
                         }
+                    }
 
-                        it("should return true when the future has been rejected") {
+                    context("when the future is rejected") {
+                        it("should return false") {
                             expect(rejectedFuture.isRejected).to(beTrue())
                         }
+                    }
 
-                        it("should return true when the future has not been completed") {
+                    context("when the future is pending") {
+                        it("should return true") {
                             expect(pendingFuture.isRejected).to(beFalse())
                         }
                     }
-                    
-                    describe("isPending") {
-                        it("should return true when the future has not been completed") {
+                }
+
+                describe("isPending") {
+                    context("when the future has not been completed yet") {
+                        it("should return true") {
                             expect(pendingFuture.isPending).to(beTrue())
                         }
-                        
-                        it("should return false when the future has been completed") {
+                    }
+
+                    context("when the future has been completed") {
+                        it("should return false ") {
                             expect(fulfilledFuture.isPending).to(beFalse())
                         }
                     }
