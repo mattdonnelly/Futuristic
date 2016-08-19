@@ -19,19 +19,24 @@ public class Future<T, E: ErrorType> {
     public var result: FutureResult?
     private var completionHandlers: [CompletionCallback] = []
 
-    public convenience init(@autoclosure(escaping) _ task: () -> FutureResult) {
-        let attribute = dispatch_queue_attr_make_with_qos_class(DISPATCH_QUEUE_CONCURRENT, QOS_CLASS_UTILITY, 0)
-        let queue = dispatch_queue_create("com.mattdonnelly.Futuristic", attribute)
-        self.init(queue: queue, task: task)
-    }
+    public init() {}
 
-    public init(queue: dispatch_queue_t, @autoclosure(escaping) task: () -> FutureResult) {
+    public init(queue: dispatch_queue_t, task: () -> FutureResult) {
         dispatch_async(queue) {
             self.complete(task())
         }
     }
 
-    public init() { }
+    public convenience init(_ result: FutureResult) {
+        self.init()
+        self.complete(result)
+    }
+
+    public convenience init(_ task: () -> FutureResult) {
+        let attribute = dispatch_queue_attr_make_with_qos_class(DISPATCH_QUEUE_CONCURRENT, QOS_CLASS_UTILITY, 0)
+        let queue = dispatch_queue_create("com.mattdonnelly.Futuristic", attribute)
+        self.init(queue: queue, task: task)
+    }
 
     public var value: T? {
         return self.result?.value
